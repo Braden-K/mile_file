@@ -50,7 +50,12 @@ export const LoginForm = () => {
           name={"username"}
           control={control}
           render={({ field: { onChange, value } }) => (
-            <TextField onChange={onChange} value={value} label={"username"} />
+            <TextField
+              color={"primary"}
+              onChange={onChange}
+              value={value}
+              label={"username"}
+            />
           )}
         />
       </Box>

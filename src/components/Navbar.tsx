@@ -2,6 +2,7 @@ import React from "react";
 import { AppBar, Toolbar, Typography, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { SxProps } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -13,12 +14,21 @@ const useStyles = makeStyles((theme) => ({
 
 export const Navbar = () => {
   const classes = useStyles();
+  const navigate = useNavigate();
 
   return (
     <AppBar position="static" className={classes.appBar}>
       <Toolbar>
         <Typography variant="h3">Mile File</Typography>
-        <Button>Home</Button>
+        <Button style={{ marginLeft: 20 }} onClick={() => navigate("/")}>
+          Home
+        </Button>
+        <Button
+          style={{ margin: 20, border: "1px solid black" }}
+          onClick={() => navigate("/AddRun")}
+        >
+          Add Run +
+        </Button>
       </Toolbar>
     </AppBar>
   );

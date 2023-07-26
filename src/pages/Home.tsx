@@ -10,7 +10,7 @@ const Home = () => {
 
   return (
     <div>
-      {user ? (
+      {user.id != -1 ? (
         <RunsContainer user={user} />
       ) : (
         <div>

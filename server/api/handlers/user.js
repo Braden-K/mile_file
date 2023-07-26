@@ -7,6 +7,7 @@ import {
 
 const getUsers = async (request, reply) => {
   try {
+    console.log("in get users");
     const users = await client.query(getUsersQuery);
     reply.send(users.rows);
   } catch (err) {

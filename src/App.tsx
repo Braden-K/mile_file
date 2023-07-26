@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import { Navbar } from "./components/Navbar";
 import theme from "./theme";
 import { ThemeProvider } from "@material-ui/core/styles";
+import { AddRun } from "./pages/AddRun";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Navbar />
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/addRun" element={<AddRun />} />
             </Routes>
           </Router>
         </Provider>

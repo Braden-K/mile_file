@@ -7,6 +7,7 @@
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
     "@fastify/cors": "^8.3.0",
+    "@hookform/error-message": "^2.0.1",
     "@material-ui/core": "^4.12.4",
     "@mui/material": "^5.13.3",
     "@reduxjs/toolkit": "^1.9.5",

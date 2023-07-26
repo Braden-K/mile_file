@@ -32,12 +32,12 @@ const getRunById = async (req, reply) => {
 const createRun = async (req, reply) => {
   try {
     const { id } = req.params;
-    const { distance, duration, avg_hr, description, intensity } = req.body;
+    const { distance, duration, heartRate, description, intensity } = req.body;
     await client.query(createRunQuery, [
       id,
       distance,
       duration,
-      avg_hr,
+      heartRate,
       description,
       intensity,
     ]);
@@ -50,13 +50,13 @@ const createRun = async (req, reply) => {
 const updateRun = async (req, reply) => {
   try {
     const { id } = req.params;
-    const { user_id, distance, duration, avg_hr, description, intensity } =
+    const { user_id, distance, duration, heartRate, description, intensity } =
       req.body;
     await client.query(updateRunQuery, [
       user_id,
       distance,
       duration,
-      avg_hr,
+      heartRate,
       description,
       intensity,
       id,

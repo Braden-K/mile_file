@@ -7,6 +7,7 @@ import { User } from "../models/User";
 import { useDispatch } from "react-redux";
 import { loadRuns } from "../redux/runsSlice";
 import { useEffect } from "react";
+import { Box, Button, Paper } from "@material-ui/core";
 
 export const RunsContainer = (p: { user: User }) => {
   const runGroup = useSelector((state: RootState) => state.runs);
@@ -25,16 +26,30 @@ export const RunsContainer = (p: { user: User }) => {
   }, []);
 
   return (
-    <table style={{ marginLeft: "auto", marginRight: "auto", marginTop: 10 }}>
-      <thead>
-        <h1>Runs</h1>
-      </thead>
-      <tbody>
-        {runGroup.runs.map((run) => {
-          console.log(run);
-          return <RunComponent run={run} />;
-        })}
-      </tbody>
-    </table>
+    <Box
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        minWidth: "100%",
+        width: "90%",
+      }}
+    >
+      <table style={{ borderCollapse: "collapse" }}>
+        <tbody>
+          <tr>
+            <th>Distance</th>
+            <th>Duration</th>
+            <th>Average Heart Rate</th>
+          </tr>
+          <Paper elevation={3} style={{ marginTop: 20 }}>
+            {runGroup.runs.map((run) => {
+              console.log(run);
+              return <RunComponent run={run} />;
+            })}
+          </Paper>
+        </tbody>
+      </table>
+    </Box>
   );
 };

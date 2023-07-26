@@ -11,8 +11,8 @@ export const getApiRunById = async (id: number): Promise<Run> => {
   return run;
 };
 
-export const postApiRun = async (body: any) => {
-  await fetchApi("/runs", {
+export const postApiRun = async (id: number, body: any) => {
+  await fetchApi(`/runs/${id}`, {
     method: "POST",
     body: JSON.stringify(body),
   });

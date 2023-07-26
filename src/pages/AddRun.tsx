@@ -1,9 +1,8 @@
 import React from "react";
-import { Paper } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import { LoginForm } from "./LoginForm";
+import { AddRunForm } from "../components/AddRunForm";
+import { Paper, makeStyles } from "@material-ui/core";
 
-export const Login = () => {
+export const AddRun = () => {
   return (
     <div
       style={{
@@ -15,8 +14,8 @@ export const Login = () => {
       }}
     >
       <Paper elevation={4} style={{ padding: "30px" }}>
-        <h1>Login To Continue</h1>
-        <LoginForm />
+        <h1 style={{ marginTop: 10 }}>Add a Run</h1>
+        <AddRunForm />
       </Paper>
     </div>
   );
