@@ -8,6 +8,7 @@ import {
   MenuItem,
   Box,
   makeStyles,
+  Slider,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { postApiRun } from "../api/runs";
@@ -22,6 +23,9 @@ interface FormInput {
 export const AddRunForm = () => {
   const user: User = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
+  const [durationHour, setDurationHour] = useState(0);
+  const [durationMinute, setDurationMinute] = useState(30);
+  const [durationSecond, setDurationSecond] = useState(30);
 
   const {
     control,
@@ -56,8 +60,12 @@ export const AddRunForm = () => {
 
   const onSubmit: any = async (data: SubmitHandler<FormInput>) => {
     console.log(data);
+
+    const totalSeconds =
+      durationHour * 3600 + durationMinute * 60 + durationSecond;
+
     if (user != null) {
-      await postApiRun(user.id, data);
+      await postApiRun(user.id, { ...data, duration: totalSeconds });
     } else {
       throw Error("No user logged in");
     }
@@ -87,10 +95,34 @@ export const AddRunForm = () => {
         rules={{
           validate: validatePositiveNumber,
         }}
-        render={({ field: { onChange, value } }) => (
+        render={({ field }) => (
           <>
             <h4>Duration</h4>
-            <TextField onChange={onChange} value={value} />
+            <h6>Hours</h6>
+            <Slider
+              defaultValue={0}
+              valueLabelDisplay="auto"
+              min={0}
+              max={10}
+              onChange={(event, value) => setDurationHour(value as number)}
+            />
+            <h6>Minutes</h6>
+            <Slider
+              defaultValue={30}
+              valueLabelDisplay="auto"
+              color="secondary"
+              min={0}
+              max={59}
+              onChange={(event, value) => setDurationMinute(value as number)}
+            />
+            <h6>Seconds</h6>
+            <Slider
+              defaultValue={30}
+              valueLabelDisplay="auto"
+              min={0}
+              max={59}
+              onChange={(event, value) => setDurationSecond(value as number)}
+            />
           </>
         )}
       />

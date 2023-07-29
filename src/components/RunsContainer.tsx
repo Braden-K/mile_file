@@ -25,5 +25,5 @@ export const RunsContainer = (p: { user: User }) => {
     fetchAndLoadRuns();
   }, []);
 
-  return <RunTable runGroup={runGroup} />;
+  return <RunTable runGroup={runGroup} fetchAndLoadRuns={fetchAndLoadRuns} />;
 };

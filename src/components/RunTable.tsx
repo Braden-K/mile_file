@@ -16,6 +16,8 @@ import { RunGroup } from "../models/RunGroup";
 import { RunTableRow } from "../models/RunTableRow";
 import "../css/runs.css";
 import { Run } from "../models/Run";
+import { Button } from "@mui/material";
+import { deleteApiRun } from "../api/runs";
 
 const monthMap = {
   "01": "Jan",
@@ -58,18 +60,26 @@ const formatDate = (date: Date, includeDayOfWeek: boolean): string => {
 
 const runDataToRows = (runs: Run[]): RunTableRow[] => {
   return runs.map((run) => {
+    const secondsPerMile = run.duration / run.distance;
+    const minutesPerMile = Math.floor(secondsPerMile / 60);
+    let secondsLeftOver = Math.floor(secondsPerMile % 60);
+    if (secondsLeftOver < 10) {
+      secondsLeftOver = Number("0" + secondsLeftOver);
+    }
+    const pace = `${minutesPerMile}:${secondsLeftOver} min/mi`;
+
     return {
       id: run.id,
       date: formatDate(run.date, true),
       distance: run.distance,
-      pace: run.duration,
+      pace: pace,
       hr: run.avg_hr,
       type: run.type,
     };
   });
 };
 
-function Row(props: { row: RunTableRow }) {
+function Row(props: { row: RunTableRow; deleteRun: (runId: number) => void }) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
 
@@ -105,9 +115,9 @@ function Row(props: { row: RunTableRow }) {
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
-              <Typography variant="h6" gutterBottom component="div">
-                History
-              </Typography>
+              <Button color="error" onClick={() => props.deleteRun(row.id)}>
+                <Typography>Delete Run</Typography>
+              </Button>
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
@@ -127,8 +137,17 @@ function Row(props: { row: RunTableRow }) {
   );
 }
 
-const RunTable = (props: { runGroup: RunGroup }) => {
+const RunTable = (props: {
+  runGroup: RunGroup;
+  fetchAndLoadRuns: () => void;
+}) => {
   const rows: RunTableRow[] = runDataToRows(props.runGroup.runs);
+
+  const deleteRun = async (runId: number) => {
+    console.log("delete run");
+    await deleteApiRun(runId);
+    props.fetchAndLoadRuns();
+  };
 
   console.log("props", props);
   return (
@@ -156,7 +175,7 @@ const RunTable = (props: { runGroup: RunGroup }) => {
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <Row key={row.id} row={row} />
+            <Row key={row.id} row={row} deleteRun={deleteRun} />
           ))}
         </TableBody>
       </Table>

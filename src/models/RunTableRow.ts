@@ -2,7 +2,7 @@ export interface RunTableRow {
   id: number;
   date: string;
   distance: number;
-  pace: number;
+  pace: string;
   hr: number | null;
   type: string | null;
 }
