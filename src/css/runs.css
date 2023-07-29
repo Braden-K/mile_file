@@ -1,12 +1,6 @@
-.table-data-first {
-  padding-right: 40px;
-  padding-left: 40px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
-.table-data {
-  padding-right: 40px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+.tableDate {
+  font-size: 2rem;
+  font-weight: 700;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
 }

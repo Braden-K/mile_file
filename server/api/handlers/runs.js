@@ -14,7 +14,7 @@ const getRunsByUserId = async (req, reply) => {
     reply.send(runs.rows);
   } catch (err) {
     console.error(err.stack);
-    reply.status(500).send("Server error");
+    reply.status(500).send("Server error in getRunsByUserId handler");
   }
 };
 
@@ -25,14 +25,15 @@ const getRunById = async (req, reply) => {
     reply.send(run.rows[0]);
   } catch (err) {
     console.log(err.stack);
-    reply.status(500).send("Server error");
+    reply.status(500).send("Server error in getRunById handler");
   }
 };
 
 const createRun = async (req, reply) => {
   try {
     const { id } = req.params;
-    const { distance, duration, heartRate, description, intensity } = req.body;
+    const { distance, duration, heartRate, description, intensity, type } =
+      req.body;
     await client.query(createRunQuery, [
       id,
       distance,
@@ -41,9 +42,9 @@ const createRun = async (req, reply) => {
       description,
       intensity,
     ]);
-    reply.status(201).send("Run created");
+    reply.status(201);
   } catch {
-    reply.status(500).send("Server error");
+    reply.status(500);
   }
 };
 

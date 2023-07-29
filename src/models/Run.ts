@@ -8,4 +8,5 @@ export interface Run {
   description: string | null;
   intensity: number | null;
   date: Date;
+  type: string | null;
 }

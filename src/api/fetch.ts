@@ -6,6 +6,6 @@ export const fetchApi = async (url: string, options: any) => {
     const data = await response.json();
     return data;
   } catch (err) {
-    console.error("Error fetching data", err);
+    console.log(err);
   }
 };
