@@ -7,9 +7,12 @@ interface ApiUser {
   password: string;
 }
 
-export const getApiUsers = async (): Promise<ApiUser[]> => {
-  const users = await fetchApi("/users", { method: "GET" });
-  return users;
+export const postApiLogin = async (body: any) => {
+  const { accessToken, refreshToken } = await fetchApi("/auth/login", {
+    method: "POST",
+    body: JSON.stringify(body),
+  });
+  return { accessToken, refreshToken };
 };
 
 export const getApiUserById = async (id: number): Promise<ApiUser> => {

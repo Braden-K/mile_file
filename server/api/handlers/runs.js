@@ -41,6 +41,7 @@ const createRun = async (req, reply) => {
       heartRate,
       description,
       intensity,
+      type,
     ]);
     reply.status(201);
   } catch {

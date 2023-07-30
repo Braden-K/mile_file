@@ -4,7 +4,9 @@ CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    firstname VARCHAR(255) NOT NULL
+    firstname VARCHAR(255) NOT NULL,
+    acessToken VARCHAR(255),
+    refreshToken VARCHAR(255),
 );
 
 CREATE TABLE runs (
@@ -16,6 +18,7 @@ CREATE TABLE runs (
     description VARCHAR(255),
     intensity VARCHAR(255),
     date DATE DEFAULT CURRENT_DATE,
+    type VARCHAR(255),
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 

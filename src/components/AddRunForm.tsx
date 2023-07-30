@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { postApiRun } from "../api/runs";
 import { RootState } from "../redux/store";
 import { User } from "../models/User";
+import { useNavigate } from "react-router-dom";
 
 interface FormInput {
   username: string;
@@ -23,6 +24,7 @@ interface FormInput {
 export const AddRunForm = () => {
   const user: User = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [durationHour, setDurationHour] = useState(0);
   const [durationMinute, setDurationMinute] = useState(30);
   const [durationSecond, setDurationSecond] = useState(30);
@@ -66,6 +68,7 @@ export const AddRunForm = () => {
 
     if (user != null) {
       await postApiRun(user.id, { ...data, duration: totalSeconds });
+      navigate("/");
     } else {
       throw Error("No user logged in");
     }

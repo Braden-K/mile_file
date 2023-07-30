@@ -1,14 +1,18 @@
 import Fastify from "fastify";
+import authRoutes from "./api/routes/authRoutes.js";
 import userRoutes from "./api/routes/userRoutes.js";
 import runRoutes from "./api/routes/runRoutes.js";
 import cors from "@fastify/cors";
 
 const fastify = Fastify({ logger: true });
 
+fastify.addHook("authorizeUser", authorizeUser);
+
 fastify.register(cors, {
   origin: "*",
 });
 
+fastify.register(authRoutes);
 fastify.register(userRoutes);
 fastify.register(runRoutes);
 

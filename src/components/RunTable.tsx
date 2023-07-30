@@ -16,7 +16,7 @@ import { RunGroup } from "../models/RunGroup";
 import { RunTableRow } from "../models/RunTableRow";
 import "../css/runs.css";
 import { Run } from "../models/Run";
-import { Button } from "@mui/material";
+import { Button, Tab } from "@mui/material";
 import { deleteApiRun } from "../api/runs";
 
 const monthMap = {
@@ -62,11 +62,12 @@ const runDataToRows = (runs: Run[]): RunTableRow[] => {
   return runs.map((run) => {
     const secondsPerMile = run.duration / run.distance;
     const minutesPerMile = Math.floor(secondsPerMile / 60);
-    let secondsLeftOver = Math.floor(secondsPerMile % 60);
+    const secondsLeftOver = Math.floor(secondsPerMile % 60);
+    let secondsLeftOverString = secondsLeftOver.toString();
     if (secondsLeftOver < 10) {
-      secondsLeftOver = Number("0" + secondsLeftOver);
+      secondsLeftOverString = `0${secondsLeftOverString}`;
     }
-    const pace = `${minutesPerMile}:${secondsLeftOver} min/mi`;
+    const pace = `${minutesPerMile}:${secondsLeftOverString} min/mi`;
 
     return {
       id: run.id,
@@ -96,19 +97,23 @@ function Row(props: { row: RunTableRow; deleteRun: (runId: number) => void }) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          <Typography>{row.date}</Typography>
+          <Typography style={{ fontFamily: "Poppins" }}>{row.date}</Typography>
         </TableCell>
         <TableCell align="right">
-          <Typography>{row.distance}</Typography>
+          <Typography style={{ fontFamily: "Poppins" }}>
+            {row.distance} Miles
+          </Typography>
         </TableCell>
         <TableCell align="right">
-          <Typography>{row.pace}</Typography>
+          <Typography style={{ fontFamily: "Poppins" }}>{row.pace}</Typography>
         </TableCell>
         <TableCell align="right">
-          <Typography>{row.hr}</Typography>
+          <Typography style={{ fontFamily: "Poppins" }}>
+            {row.hr} BPM
+          </Typography>
         </TableCell>
         <TableCell align="right">
-          <Typography>{row.type}</Typography>
+          <Typography style={{ fontFamily: "Poppins" }}>{row.type}</Typography>
         </TableCell>
       </TableRow>
       <TableRow>
@@ -155,22 +160,38 @@ const RunTable = (props: {
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
-            <TableCell />
+            <TableCell width="10vw" />
             <TableCell>
-              <Typography variant="h6"> Date </Typography>
+              <Typography variant="h6" style={{ fontFamily: "Poppins" }}>
+                {" "}
+                Date{" "}
+              </Typography>
             </TableCell>
             <TableCell align="right">
-              <Typography variant="h6"> Distance </Typography>
+              <Typography variant="h6" style={{ fontFamily: "Poppins" }}>
+                {" "}
+                Distance{" "}
+              </Typography>
             </TableCell>
             <TableCell align="right">
-              <Typography variant="h6"> Pace </Typography>
+              <Typography variant="h6" style={{ fontFamily: "Poppins" }}>
+                {" "}
+                Pace{" "}
+              </Typography>
             </TableCell>
             <TableCell align="right">
-              <Typography variant="h6"> Avg BPM </Typography>
+              <Typography variant="h6" style={{ fontFamily: "Poppins" }}>
+                {" "}
+                Avg Heart Rate{" "}
+              </Typography>
             </TableCell>
             <TableCell align="right">
-              <Typography variant="h6"> Type </Typography>
+              <Typography variant="h6" style={{ fontFamily: "Poppins" }}>
+                {" "}
+                Type{" "}
+              </Typography>
             </TableCell>
+            <TableCell align="right" width="10vw" />
           </TableRow>
         </TableHead>
         <TableBody>

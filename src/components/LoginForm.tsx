@@ -4,7 +4,7 @@ import Input from "@material-ui/core/Input";
 import { TextField, Button } from "@material-ui/core";
 import { Box } from "@mui/material";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-import { getApiUsers } from "../api/users";
+import { postApiLogin } from "../api/users";
 import { useDispatch } from "react-redux";
 import { loadUser } from "../redux/userSlice";
 
@@ -24,23 +24,11 @@ export const LoginForm = () => {
   });
 
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
-    console.log(data);
-    const users = await getApiUsers();
-    if (users) {
-      const user = users.find((user) => user.username === data.username);
-      if (user && user.password === data.password) {
-        dispatch(
-          loadUser({ id: user.id, name: user.name, username: user.username })
-        );
-        console.log("Login successful");
-      } else if (user) {
-        console.log("Wrong password");
-      } else {
-        console.log("User not found");
-      }
-    } else {
-      throw new Error("No users found");
-    }
+    const user = await postApiLogin({
+      username: data.username,
+      password: data.password,
+    });
+    dispatch(loadUser(user));
   };
 
   return (
