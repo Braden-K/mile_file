@@ -1,23 +1,26 @@
-import client from "../../db";
+import client from "../../db.js";
 import jwt from "jsonwebtoken";
 import {
   postAccessTokenQuery,
   postRefreshTokenQuery,
   deleteRefreshTokenQuery,
-} from "../sql/userQueries";
+} from "../sql/userQueries.js";
 
 const login = async (req, reply) => {
+  console.log("login", req.body);
   const users = await client.query(getUsersQuery);
 
   if (users) {
     const user = users.find((user) => user.username === req.username);
 
     if (user && user.password === req.password) {
+      const { firstname, id } = user;
       const accessToken = generateAccessToken(user);
+      console.log("access token", accessToken);
       const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
       await client.query(postAccessTokenQuery, [accessToken]);
       await client.query(postRefreshTokenQuery, [refreshToken]);
-      reply.send({ accessToken, refreshToken });
+      reply.send({ accessToken, refreshToken, firstname, id });
     } else if (user) {
       console.log("Wrong password");
     } else {

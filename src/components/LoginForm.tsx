@@ -24,11 +24,16 @@ export const LoginForm = () => {
   });
 
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
+    console.log("data", data);
     const user = await postApiLogin({
       username: data.username,
       password: data.password,
     });
-    dispatch(loadUser(user));
+    if (user) {
+      dispatch(loadUser(user));
+    } else {
+      console.log("login failed");
+    }
   };
 
   return (
