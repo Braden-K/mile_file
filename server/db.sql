@@ -5,8 +5,8 @@ CREATE TABLE users (
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     firstname VARCHAR(255) NOT NULL,
-    acessToken VARCHAR(255),
-    refreshToken VARCHAR(255),
+    accesstoken VARCHAR(255),
+    refreshtoken VARCHAR(255),
 );
 
 CREATE TABLE runs (

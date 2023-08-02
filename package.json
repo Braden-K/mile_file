@@ -19,6 +19,7 @@
     "concurrently": "^8.1.0",
     "dotenv": "^16.3.1",
     "fastify": "^4.17.0",
+    "fastify-auth": "^1.2.0",
     "fastify-cors": "^6.1.0",
     "jsonwebtoken": "^9.0.1",
     "pg": "^8.11.0",

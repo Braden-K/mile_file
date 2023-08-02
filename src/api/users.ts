@@ -12,9 +12,16 @@ export const postApiLogin = async (body: any) => {
   const userObj = await fetchApi("/auth/login", {
     method: "POST",
     body: JSON.stringify(body),
+    contentType: "application/json",
+    accepts: "application/json",
   });
   console.log(userObj);
-  return ({ accessToken, refreshToken, firstname, id } = userObj);
+  return {
+    accessToken: userObj.accessToken,
+    refreshToken: userObj.refreshToken,
+    firstname: userObj.firstname,
+    id: userObj.id,
+  };
 };
 
 export const getApiUserById = async (id: number): Promise<ApiUser> => {
