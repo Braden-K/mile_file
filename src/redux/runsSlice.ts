@@ -1,17 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RunGroup } from "../models/RunGroup";
 
-const initialRunState: RunGroup = {
-  id: 0,
-  runs: [],
-};
+const initialRunState: RunGroup[] = [];
 
 const runsSlice = createSlice({
   name: "runs",
   initialState: initialRunState,
   reducers: {
     loadRuns: (state, action) => {
-      return { ...state, runs: action.payload };
+      return action.payload;
     },
   },
 });

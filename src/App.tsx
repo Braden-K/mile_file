@@ -13,19 +13,19 @@ import { AuthProvider } from "./context/AuthContext";
 function App() {
   return (
     <div className="App">
-      <AuthProvider>
-        <ThemeProvider theme={theme}>
-          <Provider store={store}>
-            <Router>
+      <ThemeProvider theme={theme}>
+        <Provider store={store}>
+          <Router>
+            <AuthProvider>
               <Navbar />
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/addRun" element={<AddRun />} />
               </Routes>
-            </Router>
-          </Provider>
-        </ThemeProvider>
-      </AuthProvider>
+            </AuthProvider>
+          </Router>
+        </Provider>
+      </ThemeProvider>
     </div>
   );
 }

@@ -1,8 +1,11 @@
 import React from "react";
 import { AppBar, Toolbar, Typography, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { SxProps } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { useSelector } from "react-redux";
+import { User } from "../models/User";
+import { RootState } from "../redux/store";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -15,6 +18,8 @@ const useStyles = makeStyles((theme) => ({
 export const Navbar = () => {
   const classes = useStyles();
   const navigate = useNavigate();
+  const { logout } = useAuth();
+  const user: User = useSelector((state: RootState) => state.user);
 
   return (
     <AppBar position="static" className={classes.appBar}>
@@ -29,6 +34,11 @@ export const Navbar = () => {
         >
           Add Run +
         </Button>
+        {user.id !== -1 && (
+          <Button style={{ marginLeft: "auto" }} onClick={() => logout()}>
+            Logout
+          </Button>
+        )}
       </Toolbar>
     </AppBar>
   );

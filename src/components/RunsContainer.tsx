@@ -6,17 +6,17 @@ import { User } from "../models/User";
 import { useDispatch } from "react-redux";
 import { loadRuns } from "../redux/runsSlice";
 import { useEffect } from "react";
-import { Box, Button, Paper } from "@material-ui/core";
 import RunTable from "./RunTable";
 
-export const RunsContainer = (p: { user: User }) => {
-  const runGroup = useSelector((state: RootState) => state.runs);
+export const RunsContainer = () => {
+  const runGroups = useSelector((state: RootState) => state.runs);
+  const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
 
-  console.log("runGroup", runGroup);
+  console.log("runGroup", runGroups);
 
   const fetchAndLoadRuns = async () => {
-    const runs = await getApiRunsByUserId(p.user.id);
+    const runs = await getApiRunsByUserId(user.id);
     console.log("runs", runs);
     dispatch(loadRuns(runs));
   };
@@ -27,8 +27,11 @@ export const RunsContainer = (p: { user: User }) => {
 
   return (
     <div style={{ marginTop: 30, marginLeft: 75, marginRight: 75 }}>
-      <RunTable runGroup={runGroup} fetchAndLoadRuns={fetchAndLoadRuns} />
-      <RunTable runGroup={runGroup} fetchAndLoadRuns={fetchAndLoadRuns} />
+      {runGroups.map((runGroup) => {
+        return (
+          <RunTable runGroup={runGroup} fetchAndLoadRuns={fetchAndLoadRuns} />
+        );
+      })}
     </div>
   );
 };

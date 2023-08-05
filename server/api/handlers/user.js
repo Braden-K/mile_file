@@ -3,6 +3,7 @@ import {
   getUsersQuery,
   createUsersQuery,
   getUserByIdQuery,
+  getUserByEmailQuery,
 } from "../sql/userQueries.js";
 
 const getUsers = async (request, reply) => {
@@ -27,14 +28,26 @@ const getUserById = async (request, reply) => {
   }
 };
 
-const createUser = async (request, reply) => {
+const getUserByEmail = async (request, reply) => {
   try {
-    const { username, password, firstname } = request.body;
-    await client.query(createUsersQuery, [username, password, firstname]);
-    reply.status(201).send("User created");
-  } catch {
+    const { email } = request.params;
+    const user = await client.query(getUserByEmailQuery, [email]);
+    reply.send(user.rows[0]);
+  } catch (err) {
+    console.error(err.stack);
     reply.status(500).send("Server error");
   }
 };
 
-export { getUsers, createUser, getUserById };
+const createUser = async (request, reply) => {
+  try {
+    console.log("body is", request.body);
+    const { email, name } = JSON.parse(request.body);
+    await client.query(createUsersQuery, [email, name]);
+    reply.status(201).send({ message: "User created" });
+  } catch {
+    reply.status(500).send({ message: "Server error" });
+  }
+};
+
+export { getUsers, createUser, getUserById, getUserByEmail };
