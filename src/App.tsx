@@ -8,21 +8,24 @@ import { Navbar } from "./components/Navbar";
 import theme from "./theme";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { AddRun } from "./pages/AddRun";
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
   return (
     <div className="App">
-      <ThemeProvider theme={theme}>
-        <Provider store={store}>
-          <Router>
-            <Navbar />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/addRun" element={<AddRun />} />
-            </Routes>
-          </Router>
-        </Provider>
-      </ThemeProvider>
+      <AuthProvider>
+        <ThemeProvider theme={theme}>
+          <Provider store={store}>
+            <Router>
+              <Navbar />
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/addRun" element={<AddRun />} />
+              </Routes>
+            </Router>
+          </Provider>
+        </ThemeProvider>
+      </AuthProvider>
     </div>
   );
 }

@@ -1,8 +1,6 @@
 import Fastify from "fastify";
-import authRoutes from "./api/routes/authRoutes.js";
 import userRoutes from "./api/routes/userRoutes.js";
 import runRoutes from "./api/routes/runRoutes.js";
-import authorizeUser from "./api/middleware/authorize.js";
 import cors from "@fastify/cors";
 import dotenv from "dotenv";
 
@@ -16,7 +14,6 @@ fastify.register(cors, {
   origin: "*",
 });
 
-fastify.register(authRoutes);
 fastify.register(userRoutes);
 fastify.register(runRoutes);
 

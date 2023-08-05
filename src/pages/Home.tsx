@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Login } from "../components/Login";
+import { SignupLogin } from "../components/SignupLogin";
 import { RootState } from "../redux/store";
 import { RunsContainer } from "../components/RunsContainer";
 
@@ -14,7 +14,7 @@ const Home = () => {
         <RunsContainer user={user} />
       ) : (
         <div>
-          <Login />
+          <SignupLogin />
         </div>
       )}
     </div>

@@ -1,9 +1,9 @@
 import React from "react";
 import { Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { LoginForm } from "./LoginForm";
+import { SignupLoginForm } from "./SignupLoginForm";
 
-export const Login = () => {
+export const SignupLogin = (isLogin: boolean) => {
   return (
     <div
       style={{
@@ -15,8 +15,12 @@ export const Login = () => {
       }}
     >
       <Paper elevation={4} style={{ padding: "30px" }}>
-        <h1>Login To Continue</h1>
-        <LoginForm />
+        {isLogin ? (
+          <h1>Login to continue</h1>
+        ) : (
+          <h1>Create an account to continue</h1>
+        )}
+        <SignupLoginForm isLoginForm={isLogin} />
       </Paper>
     </div>
   );

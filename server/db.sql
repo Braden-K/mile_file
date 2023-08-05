@@ -2,11 +2,9 @@ CREATE DATABASE mile_file;
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    username VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    firstname VARCHAR(255) NOT NULL,
-    accesstoken VARCHAR(255),
-    refreshtoken VARCHAR(255),
+    name VARCHAR(255) NOT NULL,
 );
 
 CREATE TABLE runs (

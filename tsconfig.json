@@ -6,6 +6,6 @@
     "outDir": "./dist",
     "rootDir": "./src"
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "src/context/AuthContextjts"],
   "exclude": ["node_modules"]
 }
