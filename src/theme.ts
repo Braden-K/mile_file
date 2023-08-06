@@ -15,26 +15,26 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: "Poppins, sans-serif",
-    fontSize: 14,
+    fontSize: 18,
     fontWeightRegular: 400,
     h1: {
-      fontSize: "2rem",
+      fontSize: "7rem",
       fontWeight: 600,
       fontFamily: "Poppins, sans-serif",
     },
     h2: {
-      fontSize: "1.8rem",
+      fontSize: "5rem",
       fontWeight: 600,
       fontFamily: "Poppins, sans-serif",
     },
     h3: {
-      fontSize: "1.6rem",
+      fontSize: "2.5rem",
       fontWeight: 600,
       color: "black",
       fontFamily: "Poppins, sans-serif",
     },
     h4: {
-      fontSize: "1.4rem",
+      fontSize: "2rem",
       fontWeight: 600,
       fontFamily: "Poppins, sans-serif",
     },

@@ -5,6 +5,7 @@ import { RootState } from "../redux/store";
 import { RunsContainer } from "../components/RunsContainer";
 import { Grid } from "@material-ui/core";
 import { LeftPanel } from "../components/LeftPanel";
+import { RightPanel } from "../components/RightPanel";
 
 const Home = () => {
   const user = useSelector((state: RootState) => state.user);
@@ -19,7 +20,7 @@ const Home = () => {
             <LeftPanel />
           </Grid>
           <Grid item xs={12} lg={8}>
-            <RunsContainer />
+            <RightPanel />
           </Grid>
         </Grid>
       ) : (

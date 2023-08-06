@@ -6,7 +6,7 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-export const StatCard = () => {
+export const ProfileStatCard = () => {
   return (
     <Card sx={{ minWidth: 275, alignContent: "left" }}>
       <CardContent style={{ alignContent: "left" }}>

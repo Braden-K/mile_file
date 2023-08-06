@@ -1,6 +1,5 @@
 export interface Run {
   id: number;
-  runGroupId: number;
   user_id: string;
   distance: number;
   duration: number;

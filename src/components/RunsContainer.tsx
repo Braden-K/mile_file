@@ -2,7 +2,6 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { getApiRunsByUserId } from "../api/runs";
-import { User } from "../models/User";
 import { useDispatch } from "react-redux";
 import { loadRuns } from "../redux/runsSlice";
 import { useEffect } from "react";
@@ -26,7 +25,7 @@ export const RunsContainer = () => {
   }, []);
 
   return (
-    <div style={{ marginTop: 30, marginLeft: 75, marginRight: 75 }}>
+    <div style={{ marginLeft: 25, marginRight: 25 }}>
       {runGroups.map((runGroup) => {
         return (
           <RunTable runGroup={runGroup} fetchAndLoadRuns={fetchAndLoadRuns} />

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { RunGroup } from "../models/RunGroup";
+import { Run } from "../models/Run";
 
-const initialRunState: RunGroup[] = [];
+const initialRunState: Run[] = [];
 
 const runsSlice = createSlice({
   name: "runs",

@@ -1,5 +1,6 @@
-import { Button } from "@material-ui/core";
+import { Button, Chip } from "@material-ui/core";
 import React from "react";
+import { useLinkClickHandler } from "react-router-dom";
 
 export const MultiButtonComponent = (props: {
   quantity: number;
@@ -10,9 +11,14 @@ export const MultiButtonComponent = (props: {
     <div style={{ margin: 50 }}>
       {Array.from(Array(props.quantity).keys()).map((i) => {
         return (
-          <Button key={i} onClick={props.clickHanlderList[i]}>
-            {props.buttonTextList[i]}
-          </Button>
+          <>
+            <Chip
+              key={i}
+              label={props.buttonTextList[i]}
+              onClick={props.clickHanlderList[i]}
+              style={{ marginLeft: 10, marginRight: 10 }}
+            />
+          </>
         );
       })}
     </div>
