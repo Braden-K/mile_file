@@ -4,6 +4,7 @@ import { SignupLogin } from "../components/SignupLogin";
 import { RootState } from "../redux/store";
 import { RunsContainer } from "../components/RunsContainer";
 import { Grid } from "@material-ui/core";
+import { LeftPanel } from "../components/LeftPanel";
 
 const Home = () => {
   const user = useSelector((state: RootState) => state.user);
