@@ -29,6 +29,12 @@ export const Navbar = () => {
           Home
         </Button>
         <Button
+          style={{ marginLeft: 20 }}
+          onClick={() => navigate("/calendar")}
+        >
+          Calendar
+        </Button>
+        <Button
           style={{ margin: 20, border: "1px solid black" }}
           onClick={() => navigate("/AddRun")}
         >
