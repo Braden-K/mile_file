@@ -99,6 +99,12 @@ function Row(props: { row: RunTableRow; deleteRun: (runId: number) => void }) {
 const RunTable = (props: { runs: Run[] }) => {
   const rows: RunTableRow[] = runDataToRows(props.runs);
 
+  const sortRowsByDate = (rows: RunTableRow[]) => {
+    return rows.sort((a, b) => {
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    });
+  };
+
   const deleteRun = async (runId: number) => {
     console.log("delete run");
     await deleteApiRun(runId);
@@ -145,7 +151,7 @@ const RunTable = (props: { runs: Run[] }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {sortRowsByDate(rows).map((row) => (
             <Row key={row.id} row={row} deleteRun={deleteRun} />
           ))}
         </TableBody>

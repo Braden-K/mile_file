@@ -10,7 +10,7 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import { AddRun } from "./pages/AddRun";
 import { AuthProvider } from "./context/AuthContext";
 import { RunDetails } from "./pages/RunDetails";
-import { Calendar } from "./pages/Calendar";
+import { CalendarPage } from "./pages/CalendarPage";
 
 function App() {
   return (
@@ -24,7 +24,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/addRun" element={<AddRun />} />
                 <Route path="/runs/:id" element={<RunDetails />} />
-                <Route path="/calendar" element={<Calendar />} />
+                <Route path="/calendar" element={<CalendarPage />} />
               </Routes>
             </AuthProvider>
           </Router>
