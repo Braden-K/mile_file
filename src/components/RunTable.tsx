@@ -12,51 +12,13 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { RunGroup } from "../models/RunGroup";
 import { RunTableRow } from "../models/RunTableRow";
 import "../css/runs.css";
 import { Run } from "../models/Run";
 import { Button, Tab } from "@mui/material";
 import { deleteApiRun } from "../api/runs";
-
-const monthMap = {
-  "01": "Jan",
-  "02": "Feb",
-  "03": "Mar",
-  "04": "Apr",
-  "05": "May",
-  "06": "Jun",
-  "07": "July",
-  "08": "Aug",
-  "09": "Sep",
-  "10": "Oct",
-  "11": "Nov",
-  "12": "Dec",
-};
-
-const weekMap = {
-  "0": "Sun",
-  "1": "Mon",
-  "2": "Tue",
-  "3": "Wed",
-  "4": "Thu",
-  "5": "Fri",
-  "6": "Sat",
-};
-
-const formatDate = (date: Date, includeDayOfWeek: boolean): string => {
-  const dateAsDate = new Date(date);
-  const dayOfWeek = dateAsDate.getDay();
-  const dateString = date.toString();
-  const year = dateString.substring(0, 4);
-  const month = dateString.substring(5, 7);
-  const day = dateString.substring(8, 10);
-
-  if (includeDayOfWeek) {
-    return `${weekMap[dayOfWeek]}, ${monthMap[month]} ${day}`;
-  }
-  return `${monthMap[month]} ${day}, ${year}`;
-};
+import { useNavigate, Link } from "react-router-dom";
+import { formatDate } from "../utils/date";
 
 const runDataToRows = (runs: Run[]): RunTableRow[] => {
   return runs.map((run) => {
@@ -83,6 +45,7 @@ const runDataToRows = (runs: Run[]): RunTableRow[] => {
 function Row(props: { row: RunTableRow; deleteRun: (runId: number) => void }) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
+  const navigate = useNavigate();
 
   return (
     <React.Fragment>
@@ -97,7 +60,9 @@ function Row(props: { row: RunTableRow; deleteRun: (runId: number) => void }) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          <Typography style={{ fontFamily: "Poppins" }}>{row.date}</Typography>
+          <Typography style={{ fontFamily: "Poppins" }}>
+            <Link to={`/runs/${row.id}`}>{row.date}</Link>
+          </Typography>
         </TableCell>
         <TableCell align="right">
           <Typography style={{ fontFamily: "Poppins" }}>
@@ -123,17 +88,6 @@ function Row(props: { row: RunTableRow; deleteRun: (runId: number) => void }) {
               <Button color="error" onClick={() => props.deleteRun(row.id)}>
                 <Typography>Delete Run</Typography>
               </Button>
-              <Table size="small" aria-label="purchases">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Customer</TableCell>
-                    <TableCell align="right">Amount</TableCell>
-                    <TableCell align="right">Total price ($)</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>holder</TableBody>
-              </Table>
             </Box>
           </Collapse>
         </TableCell>
@@ -142,16 +96,12 @@ function Row(props: { row: RunTableRow; deleteRun: (runId: number) => void }) {
   );
 }
 
-const RunTable = (props: {
-  runGroup: RunGroup;
-  fetchAndLoadRuns: () => void;
-}) => {
-  const rows: RunTableRow[] = runDataToRows(props.runGroup.runs);
+const RunTable = (props: { runs: Run[] }) => {
+  const rows: RunTableRow[] = runDataToRows(props.runs);
 
   const deleteRun = async (runId: number) => {
     console.log("delete run");
     await deleteApiRun(runId);
-    props.fetchAndLoadRuns();
   };
 
   console.log("props", props);

@@ -24,6 +24,7 @@
     "firebase": "^10.1.0",
     "firebaseui": "^6.1.0",
     "jsonwebtoken": "^9.0.1",
+    "moment": "^2.29.4",
     "pg": "^8.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

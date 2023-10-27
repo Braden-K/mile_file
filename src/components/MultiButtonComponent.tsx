@@ -6,9 +6,10 @@ export const MultiButtonComponent = (props: {
   quantity: number;
   buttonTextList: Array<string>;
   clickHanlderList: Array<() => void>;
+  margin: number;
 }) => {
   return (
-    <div style={{ margin: 50 }}>
+    <div style={{ margin: props.margin }}>
       {Array.from(Array(props.quantity).keys()).map((i) => {
         return (
           <>

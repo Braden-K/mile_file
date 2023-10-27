@@ -4,6 +4,7 @@ import {
   createRunQuery,
   getRunByIdQuery,
   updateRunQuery,
+  updateRunNotesQuery,
   deleteRunQuery,
 } from "../sql/runQueries.js";
 
@@ -70,6 +71,18 @@ const updateRun = async (req, reply) => {
   }
 };
 
+const updateRunNotes = async (req, reply) => {
+  try {
+    const { id } = req.params;
+    const { description } = req.body;
+    await client.query(updateRunNotesQuery, [description, id]);
+    reply.status(201);
+  } catch (err) {
+    console.log(err.stack);
+    reply.status(500).send("Server error");
+  }
+};
+
 const deleteRun = async (req, reply) => {
   try {
     const { id } = req.params;
@@ -81,4 +94,11 @@ const deleteRun = async (req, reply) => {
   }
 };
 
-export { getRunsByUserId, getRunById, createRun, updateRun, deleteRun };
+export {
+  getRunsByUserId,
+  getRunById,
+  createRun,
+  updateRun,
+  updateRunNotes,
+  deleteRun,
+};

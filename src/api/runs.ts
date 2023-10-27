@@ -28,6 +28,16 @@ export const putApiRun = async (id: number, body: any) => {
   });
 };
 
+export const putApiRunNotes = async (id: number, body: any) => {
+  await fetchApi(`/runs/${id}/notes`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+};
+
 export const deleteApiRun = async (id: number) => {
   await fetchApi(`/runs/${id}`, { method: "DELETE" });
 };

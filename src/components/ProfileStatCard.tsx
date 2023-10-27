@@ -5,28 +5,42 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+import moment from "moment";
 
 export const ProfileStatCard = () => {
+  const user = useSelector((state: RootState) => state.user);
+  const runs = useSelector((state: RootState) => state.runs);
+
+  const calculateCurrentWeeksMiles = () => {
+    let miles = 0;
+    const today = moment();
+    runs.forEach((run) => {
+      const runDate = moment(run.date);
+      if (today.diff(runDate, "days") <= 7) {
+        miles += run.distance;
+      }
+    });
+    return miles;
+  };
+
   return (
-    <Card sx={{ minWidth: 275, alignContent: "left" }}>
+    <Card sx={{ minWidth: 275, alignContent: "left", marginBottom: 10 }}>
       <CardContent style={{ alignContent: "left" }}>
-        <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
-          Word of the Day
-        </Typography>
         <Typography variant="h5" component="div">
-          Butt
+          {user.name}
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          adjective
+          {user.email}
         </Typography>
-        <Typography variant="body2">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
+        <Typography>Previous 7 days</Typography>
+        <Typography variant="h6">
+          {calculateCurrentWeeksMiles()} miles
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Learn More</Button>
+        <Button size="small">View full profile</Button>
       </CardActions>
     </Card>
   );
