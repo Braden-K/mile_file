@@ -2,6 +2,7 @@ import { Typography } from "@material-ui/core";
 import React, { useState } from "react";
 import { MultiButtonComponent } from "./MultiButtonComponent";
 import { putApiRunNotes } from "../api/runs";
+import "../css/runs.css";
 
 export const RunNotes = (props: {
   id: number | undefined;
