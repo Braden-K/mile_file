@@ -34,6 +34,15 @@ export const Navbar = () => {
         >
           Calendar
         </Button>
+        <Button style={{ marginLeft: 20 }} onClick={() => navigate("/shoes")}>
+          Shoes
+        </Button>
+        <Button
+          style={{ marginLeft: 20 }}
+          onClick={() => navigate("/calculator")}
+        >
+          calculator
+        </Button>
         <Button
           style={{ margin: 20, border: "1px solid black" }}
           onClick={() => navigate("/AddRun")}

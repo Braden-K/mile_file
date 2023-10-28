@@ -11,6 +11,8 @@ import { AddRun } from "./pages/AddRun";
 import { AuthProvider } from "./context/AuthContext";
 import { RunDetails } from "./pages/RunDetails";
 import { CalendarPage } from "./pages/CalendarPage";
+import { Shoes } from "./pages/Shoes";
+import { RaceTimeCalculator } from "./pages/RaceTimeCalculator";
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
                 <Route path="/addRun" element={<AddRun />} />
                 <Route path="/runs/:id" element={<RunDetails />} />
                 <Route path="/calendar" element={<CalendarPage />} />
+                <Route path="/shoes" element={<Shoes />} />
+                <Route path="/calculator" element={<RaceTimeCalculator />} />
               </Routes>
             </AuthProvider>
           </Router>

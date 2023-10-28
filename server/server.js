@@ -1,6 +1,7 @@
 import Fastify from "fastify";
 import userRoutes from "./api/routes/userRoutes.js";
 import runRoutes from "./api/routes/runRoutes.js";
+import shoeRoutes from "./api/routes/shoeRoutes.js";
 import cors from "@fastify/cors";
 import dotenv from "dotenv";
 
@@ -16,6 +17,7 @@ fastify.register(cors, {
 
 fastify.register(userRoutes);
 fastify.register(runRoutes);
+fastify.register(shoeRoutes);
 
 fastify.listen({ port: 5000 }, function (err, address) {
   if (err) {

@@ -19,6 +19,15 @@ CREATE TABLE runs (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
+CREATE TABLE shoes (
+    id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL,
+    shoe_name VARCHAR(255) NOT NULL,
+    miles INT NOT NULL,
+    date DATE NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+)
+
 CREATE TABLE lifts (
     id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
