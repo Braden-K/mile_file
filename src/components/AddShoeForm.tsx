@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { User } from "../models/User";
 import { useNavigate } from "react-router-dom";
-import { postApiShoe } from "../api/shoe";
+import { getApiShoesByUserId, postApiShoe } from "../api/shoe";
 
 interface FormInput {
   name: string;
@@ -31,6 +31,8 @@ export const AddShoeForm = () => {
     console.log(data);
 
     if (user != null) {
+      const response = await getApiShoesByUserId(user.id);
+      console.log(response);
       await postApiShoe(user.id, { ...data, miles: "0" });
       navigate("/shoes");
     } else {

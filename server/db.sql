@@ -24,7 +24,7 @@ CREATE TABLE shoes (
     user_id INT NOT NULL,
     shoe_name VARCHAR(255) NOT NULL,
     miles INT NOT NULL,
-    date DATE NOT NULL,
+    date DATE DEFAULT CURRENT_DATE,
     FOREIGN KEY (user_id) REFERENCES users(id)
 )
 
