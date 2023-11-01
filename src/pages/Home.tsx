@@ -8,7 +8,9 @@ import { LeftPanel } from "../components/LeftPanel";
 import { RightPanel } from "../components/RightPanel";
 import { useDispatch } from "react-redux";
 import { loadRuns } from "../redux/runsSlice";
+import { loadShoes } from "../redux/shoeSlice";
 import { getApiRunsByUserId } from "../api/runs";
+import { getApiShoesByUserId } from "../api/shoe";
 
 const Home = () => {
   const user = useSelector((state: RootState) => state.user);
@@ -19,6 +21,11 @@ const Home = () => {
   const fetchAndLoadRuns = async () => {
     const runs = await getApiRunsByUserId(user.id);
     dispatch(loadRuns(runs));
+  };
+
+  const fetchAndLoadShoes = async () => {
+    const shoes = await getApiShoesByUserId(user.id);
+    dispatch(loadShoes(shoes));
   };
 
   useEffect(() => {
@@ -33,7 +40,8 @@ const Home = () => {
 
   useEffect(() => {
     fetchAndLoadRuns();
-  }, [fetchAndLoadRuns]);
+    fetchAndLoadShoes();
+  }, [fetchAndLoadRuns, fetchAndLoadShoes]);
 
   return (
     <div>

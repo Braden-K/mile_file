@@ -11,38 +11,41 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import { ShoeModal } from "../components/ShoeModal";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+import { Shoe } from "../models/Shoe";
 
 export const Shoes = () => {
+  const shoes = useSelector((state: RootState) => state.shoes);
+
   return (
     <Container>
       <ShoeModal />
-      <ShoeTable />
+      <ShoeTable shoes={shoes} />
     </Container>
   );
 };
 
-function Row() {
+function Row(props: { shoe: Shoe }) {
   return (
     <React.Fragment>
       <TableRow>
         <TableCell align="right">
-          <Typography style={{ fontFamily: "Poppins" }}>w</Typography>
+          <Typography style={{ fontFamily: "Poppins" }}>
+            {props.shoe.shoe_name}
+          </Typography>
         </TableCell>
         <TableCell align="right">
-          <Typography style={{ fontFamily: "Poppins" }}>a</Typography>
-        </TableCell>
-        <TableCell align="right">
-          <Typography style={{ fontFamily: "Poppins" }}>d</Typography>
-        </TableCell>
-        <TableCell align="right">
-          <Typography style={{ fontFamily: "Poppins" }}>a</Typography>
+          <Typography style={{ fontFamily: "Poppins" }}>
+            {props.shoe.miles}
+          </Typography>
         </TableCell>
       </TableRow>
     </React.Fragment>
   );
 }
 
-const ShoeTable = () => {
+const ShoeTable = (props: { shoes: Shoe[] }) => {
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
@@ -62,7 +65,11 @@ const ShoeTable = () => {
             <TableCell align="right" width="10vw" />
           </TableRow>
         </TableHead>
-        <TableBody>{"body"}</TableBody>
+        <TableBody>
+          {props.shoes.map((shoe) => (
+            <Row key={shoe.id} shoe={shoe} />
+          ))}
+        </TableBody>
       </Table>
     </TableContainer>
   );

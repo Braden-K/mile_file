@@ -15,19 +15,38 @@ import { postApiRun } from "../api/runs";
 import { RootState } from "../redux/store";
 import { User } from "../models/User";
 import { useNavigate } from "react-router-dom";
+import { Shoe } from "../models/Shoe";
+import { getApiShoesByUserId, putApiShoe } from "../api/shoe";
+import { loadShoes } from "../redux/shoeSlice";
 
 interface FormInput {
-  username: string;
-  password: string;
+  distance: string;
+  duration: string;
+  heartRate: string;
+  description: string;
+  type: string;
+  shoe_id: string;
 }
 
 export const AddRunForm = () => {
   const user: User = useSelector((state: RootState) => state.user);
+  const shoes: Shoe[] = useSelector((state: RootState) => state.shoes);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [durationHour, setDurationHour] = useState(0);
   const [durationMinute, setDurationMinute] = useState(30);
   const [durationSecond, setDurationSecond] = useState(30);
+
+  const updateShoeMileage = async (data: any) => {
+    const userShoes = await getApiShoesByUserId(user.id);
+    const chosenShoe = userShoes.find((shoe) => shoe.id === data.shoe_id);
+    console.log("chosenShoe", chosenShoe);
+    const updatedMileage = (chosenShoe?.miles || 0) + Number(data.distance);
+    console.log("data.shoeid", data.shoe_id);
+    await putApiShoe(data.shoe_id, { miles: updatedMileage });
+    const updatedShoes = await getApiShoesByUserId(user.id);
+    dispatch(loadShoes(updatedShoes));
+  };
 
   const {
     control,
@@ -40,7 +59,7 @@ export const AddRunForm = () => {
       heartRate: "",
       description: "",
       type: "easy",
-      intensity: "1",
+      shoe_id: "",
     },
   });
 
@@ -61,13 +80,24 @@ export const AddRunForm = () => {
   };
 
   const onSubmit: any = async (data: SubmitHandler<FormInput>) => {
-    console.log(data);
+    console.log("add run form data", data);
 
     const totalSeconds =
       durationHour * 3600 + durationMinute * 60 + durationSecond;
 
     if (user != null) {
-      await postApiRun(user.id, { ...data, duration: totalSeconds });
+      try {
+        await postApiRun(user.id, { ...data, duration: totalSeconds });
+
+        try {
+          updateShoeMileage({ ...data });
+        } catch (err) {
+          console.log("error updating shoe mileage", err);
+        }
+      } catch (err) {
+        console.log("error uploading run", err);
+      }
+
       navigate("/");
     } else {
       throw Error("No user logged in");
@@ -175,22 +205,15 @@ export const AddRunForm = () => {
       />
 
       <Controller
-        name={"intensity"}
+        name={"shoe_id"}
         control={control}
         render={({ field: { onChange, value } }) => (
           <>
-            <h4>Intensity</h4>
+            <h4>Shoe</h4>
             <Select onChange={onChange} value={value}>
-              <MenuItem value={"1"}>1</MenuItem>
-              <MenuItem value={"2"}>2</MenuItem>
-              <MenuItem value={"3"}>3</MenuItem>
-              <MenuItem value={"4"}>4</MenuItem>
-              <MenuItem value={"5"}>5</MenuItem>
-              <MenuItem value={"6"}>6</MenuItem>
-              <MenuItem value={"7"}>7</MenuItem>
-              <MenuItem value={"8"}>8</MenuItem>
-              <MenuItem value={"9"}>9</MenuItem>
-              <MenuItem value={"10"}>10</MenuItem>
+              {shoes.map((shoe) => {
+                return <MenuItem value={shoe.id}>{shoe.shoe_name}</MenuItem>;
+              })}
             </Select>
           </>
         )}

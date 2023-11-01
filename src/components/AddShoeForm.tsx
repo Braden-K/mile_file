@@ -7,12 +7,13 @@ import { RootState } from "../redux/store";
 import { User } from "../models/User";
 import { useNavigate } from "react-router-dom";
 import { getApiShoesByUserId, postApiShoe } from "../api/shoe";
+import { loadShoes } from "../redux/shoeSlice";
 
 interface FormInput {
   name: string;
 }
 
-export const AddShoeForm = () => {
+export const AddShoeForm = (props: { closeModal: () => void }) => {
   const user: User = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -31,10 +32,11 @@ export const AddShoeForm = () => {
     console.log(data);
 
     if (user != null) {
-      const response = await getApiShoesByUserId(user.id);
-      console.log(response);
       await postApiShoe(user.id, { ...data, miles: "0" });
-      navigate("/shoes");
+      const shoes = await getApiShoesByUserId(user.id);
+      console.log("Shoes", shoes);
+      dispatch(loadShoes(shoes));
+      props.closeModal();
     } else {
       throw Error("Error adding shoe");
     }

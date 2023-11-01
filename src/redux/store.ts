@@ -1,11 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "../redux/userSlice";
 import runsReducer from "../redux/runsSlice";
-
+import shoesReducer from "../redux/shoeSlice";
 const store = configureStore({
   reducer: {
     user: userReducer,
     runs: runsReducer,
+    shoes: shoesReducer,
   },
 });
 

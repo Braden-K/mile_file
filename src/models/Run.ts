@@ -5,7 +5,7 @@ export interface Run {
   duration: number;
   avg_hr: number | null;
   description: string | null;
-  intensity: number | null;
+  shoe_id: number | null;
   date: Date;
   type: string | null;
 }

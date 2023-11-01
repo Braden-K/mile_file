@@ -33,7 +33,7 @@ const getRunById = async (req, reply) => {
 const createRun = async (req, reply) => {
   try {
     const { id } = req.params;
-    const { distance, duration, heartRate, description, intensity, type } =
+    const { distance, duration, heartRate, description, shoe_id, type } =
       req.body;
     await client.query(createRunQuery, [
       id,
@@ -41,9 +41,10 @@ const createRun = async (req, reply) => {
       duration,
       heartRate,
       description,
-      intensity,
+      shoe_id,
       type,
     ]);
+
     reply.status(201);
   } catch {
     reply.status(500);
@@ -53,7 +54,7 @@ const createRun = async (req, reply) => {
 const updateRun = async (req, reply) => {
   try {
     const { id } = req.params;
-    const { user_id, distance, duration, heartRate, description, intensity } =
+    const { user_id, distance, duration, heartRate, description, shoe } =
       req.body;
     await client.query(updateRunQuery, [
       user_id,
@@ -61,7 +62,7 @@ const updateRun = async (req, reply) => {
       duration,
       heartRate,
       description,
-      intensity,
+      shoe,
       id,
     ]);
     reply.status(201).send("Run updated");

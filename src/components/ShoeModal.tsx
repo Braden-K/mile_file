@@ -38,7 +38,7 @@ export const ShoeModal = () => {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Add a shoe
           </Typography>
-          <AddShoeForm />
+          <AddShoeForm closeModal={handleClose} />
         </Box>
       </Modal>
     </div>

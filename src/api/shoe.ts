@@ -16,3 +16,15 @@ export const postApiShoe = async (user_id: number, body: any) => {
     body: JSON.stringify(body),
   });
 };
+
+export const putApiShoe = async (shoe_id: number, body: any) => {
+  console.log("Put apoi shoe id", shoe_id);
+  console.log("body", body);
+  await fetchApi(`/shoes/${shoe_id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+};

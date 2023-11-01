@@ -1,5 +1,6 @@
 import { fetchApi } from "./fetch";
 import { Run } from "../models/Run";
+import { getApiShoesByUserId, putApiShoe } from "./shoe";
 
 export const getApiRunsByUserId = async (user_id: number): Promise<Run[]> => {
   const runs = await fetchApi(`/runs/user/${user_id}`, { method: "GET" });
