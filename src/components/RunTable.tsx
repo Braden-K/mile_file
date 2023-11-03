@@ -16,9 +16,14 @@ import { RunTableRow } from "../models/RunTableRow";
 import "../css/runs.css";
 import { Run } from "../models/Run";
 import { Button, Tab } from "@mui/material";
-import { deleteApiRun } from "../api/runs";
+import { deleteApiRun, getApiRunById, getApiRunsByUserId } from "../api/runs";
 import { useNavigate, Link } from "react-router-dom";
 import { formatDate } from "../utils/date";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+import { useDispatch } from "react-redux";
+import { loadRuns } from "../redux/runsSlice";
+import { DotMenu } from "./DotMenu";
 
 const runDataToRows = (runs: Run[]): RunTableRow[] => {
   return runs.map((run) => {
@@ -42,22 +47,30 @@ const runDataToRows = (runs: Run[]): RunTableRow[] => {
   });
 };
 
-function Row(props: { row: RunTableRow; deleteRun: (runId: number) => void }) {
+function Row(props: { row: RunTableRow; userId: number }) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const editRunHandler = () => {
+    navigate("/editRun");
+  };
+
+  const deleteRunHandler = async () => {
+    await deleteApiRun(row.id);
+    const runs = await getApiRunsByUserId(props.userId);
+    dispatch(loadRuns(runs));
+  };
+
+  const handlerArr = [editRunHandler, deleteRunHandler];
+  const optionArr = ["Edit Run", "DeleteRun"];
 
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
+          <DotMenu optionArr={optionArr} handlerArr={handlerArr} />
         </TableCell>
         <TableCell component="th" scope="row">
           <Typography style={{ fontFamily: "Poppins" }}>
@@ -81,33 +94,18 @@ function Row(props: { row: RunTableRow; deleteRun: (runId: number) => void }) {
           <Typography style={{ fontFamily: "Poppins" }}>{row.type}</Typography>
         </TableCell>
       </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
-              <Button color="error" onClick={() => props.deleteRun(row.id)}>
-                <Typography>Delete Run</Typography>
-              </Button>
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
     </React.Fragment>
   );
 }
 
 const RunTable = (props: { runs: Run[] }) => {
+  const user = useSelector((state: RootState) => state.user);
   const rows: RunTableRow[] = runDataToRows(props.runs);
 
   const sortRowsByDate = (rows: RunTableRow[]) => {
     return rows.sort((a, b) => {
       return new Date(b.date).getTime() - new Date(a.date).getTime();
     });
-  };
-
-  const deleteRun = async (runId: number) => {
-    console.log("delete run");
-    await deleteApiRun(runId);
   };
 
   console.log("props", props);
@@ -152,7 +150,7 @@ const RunTable = (props: { runs: Run[] }) => {
         </TableHead>
         <TableBody>
           {sortRowsByDate(rows).map((row) => (
-            <Row key={row.id} row={row} deleteRun={deleteRun} />
+            <Row key={row.id} row={row} userId={user.id} />
           ))}
         </TableBody>
       </Table>
