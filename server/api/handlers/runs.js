@@ -53,22 +53,24 @@ const createRun = async (req, reply) => {
 
 const updateRun = async (req, reply) => {
   try {
+    console.log("uipdaste run hanlder and here is reqbocy", req.body);
     const { id } = req.params;
-    const { user_id, distance, duration, heartRate, description, shoe } =
+    const { user_id, distance, duration, avg_hr, description, shoe_id, date } =
       req.body;
     await client.query(updateRunQuery, [
       user_id,
       distance,
       duration,
-      heartRate,
+      avg_hr,
       description,
-      shoe,
+      shoe_id,
+      date,
       id,
     ]);
-    reply.status(201).send("Run updated");
+    reply.status(201).send({ message: "Run updated" });
   } catch (err) {
     console.log(err.stack);
-    reply.status(500).send("Server error");
+    reply.status(500).send({ message: "Server error in updateRun handler" });
   }
 };
 

@@ -26,6 +26,9 @@ export const postApiRun = async (id: number, body: any) => {
 export const putApiRun = async (id: number, body: any) => {
   await fetchApi(`/runs/${id}`, {
     method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify(body),
   });
 };
